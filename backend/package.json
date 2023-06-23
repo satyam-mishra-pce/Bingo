@@ -4,7 +4,7 @@
   "description": "Backend For Bingo",
   "main": "index.js",
   "scripts": {
-    "test": "npm index.js",
+    "test": "node index.js",
     "start": "babel-node index.js"
   },
   "author": "Satyam",

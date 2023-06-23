@@ -8,7 +8,7 @@ The project aims to develop a Multiplayer Online Bingo Game that offers an engag
 - Open the terminal and navigate to the root directory.
 - Navigate to the 'backend' folder by typing `cd backend` and hitting enter in terminal.
 - Install the dependencies, by running the command `npm install`.
-- Start the backend server by running the command `npm start`.
+- Start the backend server by running the command `npm test`.
 
 - Open another terminal and navigate to the root directory.
 - Navigate to the 'fontend' folder by running the command `cd frontend`.
