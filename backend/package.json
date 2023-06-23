@@ -1,0 +1,19 @@
+{
+  "name": "bingo",
+  "version": "1.0.0",
+  "description": "Backend For Bingo",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm index.js",
+    "start": "babel-node index.js"
+  },
+  "author": "Satyam",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "aws-sdk": "^2.1396.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.6.2",
+    "ws": "^8.13.0"
+  }
+}
