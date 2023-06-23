@@ -7,7 +7,7 @@ import './css/index.css';
 import Lobby from './Components/Lobby';
 import Game from './Components/Game';
 
-const socket = io.connect("https://bingo-node-server.glitch.me/");
+const socket = io.connect(process.env.SocketServer || "https://localhost:8080" );
 
 
 const App = () => {
