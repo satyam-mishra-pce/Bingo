@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./../css/components/roomoptions.css";
+
 const RoomOptions = (
     {
         roomID,

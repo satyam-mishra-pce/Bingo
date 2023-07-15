@@ -41,7 +41,7 @@ const createAndJoinRoom = async (limit, firstUser, displayName, io) => {
     firstUser.displayName = displayName;
 
     let room = await asyncGetRoom(io, newRoomID);
-    room["limit"] = limit;
+    room["limit"] = Math.min(10, Math.max(2, limit));
     room["turn"] = firstUser.id;
     room["status"] = "waiting";
 
@@ -50,7 +50,8 @@ const createAndJoinRoom = async (limit, firstUser, displayName, io) => {
 
     return {
         "roomID": newRoomID,
-        "participants": participants
+        "participants": participants,
+        "turn": firstUser.id
     }
 }
 
@@ -58,8 +59,12 @@ const createAndJoinRoom = async (limit, firstUser, displayName, io) => {
 
 const joinRoom = (roomID, user, displayName, io) => {
     let room = getRoom(io, roomID);
-    let participants = getParticipants(io, room);
+    
+    if (room == undefined) 
+    throw new Error("Room is not available.")
 
+    let participants = getParticipants(io, room);
+    undefined
     if (room["status"] == "started") 
     throw new Error("Game has already started.");
 
@@ -112,6 +117,7 @@ const leaveRoom = (roomID, user, io) => {
 
     delete participants[user.id];
     response['participants'] = participants;
+    response["roomID"] = roomID;
     
     return response;
 }

@@ -20,8 +20,6 @@ io.on("connection", socket => {
   // Handle new connections:
   console.log("New connection:", socket.id);
 
-
-
   // Handle Create and Join Room:
   socket.on("create-and-join-room", async data => {
     const limit = data.limit;
@@ -30,25 +28,24 @@ io.on("connection", socket => {
     try {
       const response = await createAndJoinRoom(limit, socket, displayName, io);
 
+      socket.emit("create-and-join-room", {
+        "success": true
+      })
       socket.emit("participants-changed", {
         "success": true,
         response,
-        "from": displayName,
+        "from-name": displayName,
+        "from-id": socket.id,
         "event": "create-and-join-room"
       })
 
     } catch (error) {
-      console.log(error);
-      // console.log(io.sockets.adapter.rooms);
-      socket.emit("participants-changed", {
+      socket.emit("create-and-join-room", {
         "success": false,
         "response": {
           "message": error.message
-        },
-        "from": displayName,
-        "event": "create-and-join-room"
+        }
       })
-
     }
   
   })
@@ -62,25 +59,24 @@ io.on("connection", socket => {
 
     try {
       const response = joinRoom(roomID, socket, displayName, io);
-
+      socket.emit("join-room", {
+        "success": true
+      });
       socket.in(roomID).emit("participants-changed", {
         "success": true,
         response,
-        "from": displayName,
+        "from-name": displayName,
+        "from-id": socket.id,
         "event": "join-room"
       })
 
     } catch (error) {
-
-      socket.emit("participants-changed", {
+      socket.emit("join-room", {
         "success": false,
         "response": {
           "message": error.message
-        },
-        "from": displayName,
-        "event": "join-room"
+        }
       })
-
     }
 
   })
@@ -117,17 +113,43 @@ io.on("connection", socket => {
     const roomID = [...socket.rooms][0];
     const displayName = socket.displayName;
     const room = getRoom(io, roomID);
-    room["status"] = "waiting";
     socket.in(roomID).emit("game-over", {
       'winnerID': socket.id,
       'winnerName': displayName
     })
   })
 
+  
+
+  // Handle Game Reset:
+  socket.on("reset", () => {
+    const roomID = [...socket.rooms][0];
+    const room = getRoom(io, roomID);
+    const displayName = socket.displayName;
+    if (room["status"] === "waiting") {
+      socket.in(roomID).emit("reset", {
+        'success': false,
+        'response': {
+          'message': 'Room is already ready for a new game.'
+        },
+        'event': "reset",
+        'from': displayName
+      })
+    } else {
+      room["status"] = "waiting";
+      socket.in(roomID).emit("reset", {
+        'success': true,
+        'event': "reset",
+        'from': displayName
+      })
+    }
+  })
+
 
   // Handle Leave Room:
   socket.on("leave-room", async () => {
     
+    const socketid = socket.id;
     try {
       const roomID = [...socket.rooms][0];
       const response = leaveRoom(roomID, socket, io);
@@ -135,34 +157,28 @@ io.on("connection", socket => {
       const room = await asyncGetRoom(io, roomID);
       
       if (room) {
-        
         socket.in(roomID).emit("participants-changed", {
         "success": true,
         response,
-        "from": socket.displayName,
-          "event": "leave-room"
+        "from-name": socket.displayName,
+        "from-id": socketid,
+        "event": "leave-room"
         })
 
       }
 
-      socket.emit("participants-changed", {
+      socket.emit("leave-room", {
         "success": true,
-        response,
-        "from": socket.displayName,
-        "event": "leave-room",
-        "for": socket.id
+        response
       })
 
     } catch (error) {
 
-      socket.emit("participants-changed", {
+      socket.emit("leave-room", {
         "success": false,
         "response": {
           "message": error.message
-        },
-        "from": socket.displayName,
-        "event": "leave-room",
-        "for": socket.id
+        }
       })
 
     }

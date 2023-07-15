@@ -1,0 +1,41 @@
+
+/* Top Bar */
+#headerstrip {
+    position: fixed;
+    top: -80px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: grid;
+    grid-template-columns: auto 100px;
+    background: rgb(var(--bg-90), 0.75);
+    backdrop-filter: blur(40px);
+    transition: top 300ms ease-out;
+    pointer-events: none;
+}
+
+#headerstrip.visible {
+    top: 0;
+    pointer-events: initial;
+}
+
+#headerstrip div.title {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 0 20px;
+}
+
+
+#headerstrip div.exit-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#exit-game-btn {
+    border: none;
+    font-size: 20px;
+    color: red;
+}

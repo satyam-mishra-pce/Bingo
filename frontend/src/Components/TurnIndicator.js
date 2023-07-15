@@ -1,20 +1,22 @@
 import React from "react";
 
+import "./../css/components/turnindicator.css";
+
 const TurnIndicator = (
     {
         isMyTurn,
         participants,
         turn,
         started,
-        restartRequired,
-        restart
+        resetRequired,
+        reset
     }
 ) => {
     return (
         <div id='turn-indicator'>
             <div className='player-indicator'>
                 {
-                    restartRequired
+                    resetRequired
                         ? "Game Over"
                         : (
                             isMyTurn ? "Your Turn" : `${participants[turn]}'s Turn`
@@ -23,9 +25,9 @@ const TurnIndicator = (
             </div>
             <div className='directions'>
                 {
-                    restartRequired
+                    resetRequired
                         ? (
-                            <button onClick={restart}>Play Again</button>
+                            <button onClick={reset}>Play Again</button>
                         )
                         : ( 
                             isMyTurn ? (

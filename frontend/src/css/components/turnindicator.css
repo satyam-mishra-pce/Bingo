@@ -1,0 +1,27 @@
+#turn-indicator {
+    border: 1px solid rgb(var(--fg-50), 0.3);
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgb(var(--bg-100));
+}
+
+#turn-indicator div.player-indicator {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#turn-indicator div.directions {
+    margin: 5px 0;
+}
+
+/* If the turn is user's: */
+.my-turn #turn-indicator {
+    border: 1px solid rgb(var(--accent-primary));
+}
+
+.my-turn #turn-indicator div.player-indicator{
+    color: rgb(var(--accent-primary));
+}

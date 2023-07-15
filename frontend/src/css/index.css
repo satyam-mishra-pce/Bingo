@@ -22,7 +22,7 @@ button.sec-btn {
 
 
 :root {
-  --accent-primary: 0, 113, 227;
+  --accent-primary: 0, 132, 255;
   --fg-100: 0, 0, 0;
   --fg-90: 10, 10, 10;
   --fg-85: 15, 15, 15;
@@ -50,6 +50,10 @@ button.sec-btn {
   --bg-20: 155, 155, 155;
   --bg-10: 145, 145, 145;
   --bg-0: 135, 135, 135;
+
+
+  --filter-accent-blue: invert(44%) sepia(44%) saturate(7500%) hue-rotate(195deg) brightness(102%) contrast(103%);
+  --filter-mid-grey: invert(56%) sepia(0%) saturate(127%) hue-rotate(179deg) brightness(102%) contrast(86%);
 }
 
 * {
@@ -72,224 +76,35 @@ html, body {
   background: rgb(var(--bg-80));
 }
 
-#lobby {
-  max-width: 600px;
-  width: 100%;
+#interaction-panel {
+  background: rgb(var(--bg-90));
   border-radius: 10px;
   border: 1px solid rgb(var(--fg-50), 0.3);
-  display: flex;
-  flex-direction: column;
-  padding: 14px;
-  background: rgb(var(--bg-90));
+  position: relative;
+  overflow: hidden;
+  transition: height 300ms ease-out, width 300ms ease-out;
 }
 
-
-
-/* Hero */
-
-#hero {
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  height: 200px;
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+#interaction-panel.bounce-in {
+  animation: bounce-in-animation 1s ease 1;
 }
 
+@keyframes bounce-in-animation {
+  0% {
+      opacity: 0;
+      transform: scale(.5);
+  }
 
+  50% {
+      opacity: 1;
+      transform: scale(1.05);
+  }
 
+  70% {
+      transform: scale(.95);
+  }
 
-/* Name Section  */
-#name-section {
-  background: rgb(var(--bg-100));
-  padding: 14px;
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-}
-
-#name-section label {
-  font-size: 20px;
-  font-weight: bold;
-  width: 100px;
-}
-
-#name-input {
-  width: calc(100% - 80px);
-  height: 40px;
-  padding-left: 10px;
-  font-size: 18px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  border-radius: 4px;
-
-}
-
-
-
-
-/*Tab Slider*/
-#tab-slider-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-
-#tab-slider {
-  height: 32px;
-  width: 202px;
-  border-radius: 8px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  background: rgb(var(--bg-100));
-}
-
-#tab-slider button.tab-option {
-  width: 100px;
-  height: 30px;
-  border: none;
-  background: none;
-  font-size: 16px;
-}
-
-
-#tab-slider button.tab-option:nth-child(1) {
-  border-radius: 7px 0 0 7px;
-}
-#tab-slider button.tab-option:nth-child(2) {
-  border-radius: 0 7px 7px 0;
-}
-
-#tab-slider button.tab-option:hover {
-  background: rgb(var(--accent-primary), 0.3);
-}
-
-#tab-slider button.tab-option.active {
-  background: rgb(var(--accent-primary));
-  color: white;
-}
-
-
-
-
-
-/* Create Room Section */
-#create-room-section {
-  background: rgb(var(--bg-100));
-  padding: 14px;
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-}
-
-#create-room-section span.label {
-  font-size: 20px;
-  font-weight: bold;
-  display: block;
-  width: 100px;
-}
-
-#limit-box {
-  display: flex;
-  width: 100px;
-  flex-direction: row;
-  border: 1px solid rgb(var(--bg-70), 0.5);
-  border-radius: 4px;
-}
-
-#limit-box button {
-  width: 30px;
-  height: 40px;
-  background: rgb(var(--accent-primary));
-  color: white;
-  border: none;
-  font-size: 18px;
-}
-
-#limit-box button.dec {
-  border-radius: 4px 0 0 4px;
-}
-
-#limit-box button.inc {
-  border-radius: 0 4px 4px 0;
-}
-
-#limit-box button:disabled{
-  background: rgb(var(--fg-10), 0.5);
-  color: black;
-}
-
-#limit-box div.limit {
-  width: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-}
-
-#create-room-btn {
-  height: 40px;
-  border-radius: 4px;
-  padding: 0 12px;
-  margin-left: 20px;
-  background: rgb(var(--accent-primary));
-  color: white;
-  border: none;
-  font-size: 16px;
-}
-
-
-
-
-
-
-/* Join Room Section  */
-
-#join-room-section {
-  background: rgb(var(--bg-100));
-  padding: 14px;
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  display: flex;
-  flex-direction: column;
-}
-
-#room-form {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-#room-form label {
-  font-size: 20px;
-  font-weight: bold;
-  width: 140px;
-}
-
-#room-input {
-  width: calc(100% - 140px);
-  height: 40px;
-  padding-left: 10px;
-  font-size: 18px;
-  border: 1px solid rgb(var(--fg-50), 0.3);
-  border-radius: 4px;
-
-}
-
-#join-room-btn {
-  height: 40px;
-  border-radius: 4px;
-  padding: 0 12px;
-  background: rgb(var(--accent-primary));
-  color: white;
-  border: none;
-  font-size: 16px;
+  100% {
+      transform: scale(1);
+  }
 }

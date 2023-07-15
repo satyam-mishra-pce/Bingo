@@ -1,0 +1,34 @@
+#room-options {
+    border-bottom: 1px solid rgb(var(--fg-50), 0.3);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 5px;
+}
+
+#room-options div.room-box {
+    height: 42px;
+    padding: 0 6px;
+    background: rgb(var(--bg-90));
+    border: 1px solid rgb(var(--fg-50), 0.5);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#room-options div.room-box div.room-id-text {
+    margin: 0 10px 0 5px;
+}
+
+#room-options div.room-box button.copy-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    color: rgb(var(--accent-primary));
+    background: rgb(var(--bg-100)); 
+}

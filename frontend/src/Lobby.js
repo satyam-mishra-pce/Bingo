@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 
+import "./css/lobby.css";
+import HeroImage from "./media/hero.svg";
 
 const Lobby = ({
     createAndJoinRoom,
@@ -17,7 +19,7 @@ const Lobby = ({
   return (
     <div id='lobby'>
 
-        <div id='hero'>
+        <div id='hero' style={{backgroundImage: `url(${HeroImage})`}}>
 
         </div>
 
@@ -37,11 +39,11 @@ const Lobby = ({
             <div id='create-room-section'>
                 <span className='label'>Limit</span>
                 <div id='limit-box'>
-                    <button className='dec' onClick={() => setlimit(Math.max(2, limit - 1))} disabled = {limit === 2}>-</button>
+                    <button className='dec primary-btn' onClick={() => setlimit(Math.max(2, limit - 1))} disabled = {limit === 2}>-</button>
                     <div className='limit'>{limit}</div>
-                    <button className='inc' onClick={() => setlimit(Math.min(10, limit + 1))} disabled = {limit === 10}>+</button>
+                    <button className='inc primary-btn' onClick={() => setlimit(Math.min(10, limit + 1))} disabled = {limit === 10}>+</button>
                 </div>
-                <button id='create-room-btn' onClick={() => {createAndJoinRoom(name, limit)}}>Create and Join Room</button>
+                <button id='create-room-btn' className={"primary-btn"} onClick={() => {createAndJoinRoom(name, limit)}}>Create and Join Room</button>
             </div>
         : 
             <div id='join-room-section'>

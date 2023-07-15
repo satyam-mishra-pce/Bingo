@@ -7,7 +7,7 @@ const WinPopup = (
     {
         socket,
         setHaltMode,
-        setRestartRequired
+        setResetRequired
     }
 ) => {
     
@@ -47,12 +47,12 @@ const WinPopup = (
     
     
     useEffect(() => {
-        console.log(winnerList);
+        // console.log(winnerList);
         if (winnerList.length === 0) {
             setGameOver(false);
         } else {
             setGameOver(true);
-            setRestartRequired(true);
+            setResetRequired(true);
         }
     }, [winnerList]);
 
@@ -66,7 +66,6 @@ const WinPopup = (
 
     const initJSConfetti = () => {
         const confettiCanvas = confettiCanvasRef.current;
-        console.log("Initialized canvas", confettiCanvas);
         setJsConfetti( new JSConfetti({ confettiCanvas }) );
     }
 
