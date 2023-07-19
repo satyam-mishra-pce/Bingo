@@ -1,6 +1,8 @@
 import React from 'react';
 import './../css/components/headerstrip.css';
 
+import LogoText from './../media/LogoText.svg';
+
 const HeaderStrip = (
     {
         leaveRoom,
@@ -11,7 +13,9 @@ const HeaderStrip = (
   return (
     <div id='headerstrip' className={visible ? "visible": ""}>
 
-        <div className='title'>BINGO</div>
+        <a className='title' href='/'>
+          <img src={LogoText} />
+        </a>
         
         <div className='exit-wrapper'>
             <button id='exit-game-btn' onClick={() => {

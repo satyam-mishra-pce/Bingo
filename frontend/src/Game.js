@@ -235,7 +235,7 @@ const Game = ({
         <div className={'game-board-wrapper' + (isMyTurn ? " my-turn " : "")}>
           <div className='game-board'>
 
-            <div className='bingo-marker'>
+            <div className='bingo-marker default-cursor'>
               <div className='bingo-letter b'>B</div>
               <div className='bingo-letter i'>I</div>
               <div className='bingo-letter n'>N</div>

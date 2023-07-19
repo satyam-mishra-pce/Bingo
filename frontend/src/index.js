@@ -21,7 +21,7 @@ let serverURL = (
   const App = () => {
     
     const [isSocketConnected, setSocketConnected] = useState(false);
-    const [isSplashAnimating, setSplashAnimating] = useState(true);
+    const [isSplashAnimating, setSplashAnimating] = useState(false);
     const [view, setView] = useState(0);
     const interactionPanelRef = useRef(undefined);
 
@@ -51,6 +51,8 @@ let serverURL = (
         setTimeout(() => {
           currentChild.classList.remove("transitioning");
           nextChild.classList.remove("transitioning");
+          currentChild.classList.remove("active");
+          nextChild.classList.add("active");
         }, 300);
       }, 20);
     }
@@ -63,8 +65,18 @@ let serverURL = (
       const interactionPanel = interactionPanelRef.current;
     
       const obs = new ResizeObserver( entries => {
+        console.log(entries, interactionPanel.children, view);
         interactionPanel.style.height = entries[0].borderBoxSize[0].blockSize + "px";
-        interactionPanel.style.width = entries[0].borderBoxSize[0].inlineSize + "px";
+        interactionPanel.style.width = entries[0].borderBoxSize[0].inlineSize + 2 + "px";
+        
+        // Remove phantom views while resizing:
+        for (let i = 0; i < interactionPanel.children.length; i++) {
+          if (i < view) {
+            interactionPanel.children[i].style.left = -100 - interactionPanel.children[i].offsetWidth + "px";
+          } else if (i > view) {
+            interactionPanel.children[i].style.left = entries[0].borderBoxSize[0].inlineSize + 200 + "px";
+          }          
+        }
       })
 
       obs.observe(interactionPanel.children[view]);

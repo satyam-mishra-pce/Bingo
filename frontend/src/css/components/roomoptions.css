@@ -12,7 +12,7 @@
     padding: 0 6px;
     background: rgb(var(--bg-90));
     border: 1px solid rgb(var(--fg-50), 0.5);
-    border-radius: 6px;
+    border-radius: 12px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -31,4 +31,11 @@
     width: 30px;
     color: rgb(var(--accent-primary));
     background: rgb(var(--bg-100)); 
+}
+
+#room-options button.participants-btn {
+    justify-self: end;
+    padding: 0 10px;
+    height: 42px;
+    border-radius: 12px;
 }

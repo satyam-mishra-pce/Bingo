@@ -23,11 +23,7 @@ const RoomOptions = (
                 </button>
             </div>
 
-            <button className='sec-btn participants-btn' style={{
-              justifySelf: "end",
-              padding: "0 10px",
-              height: "42px"
-            }}>
+            <button className='sec-btn participants-btn'>
             <i className="fa-regular fa-user-group"></i> {Object.keys(participants).length}
             </button>
 

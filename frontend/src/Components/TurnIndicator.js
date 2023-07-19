@@ -19,7 +19,7 @@ const TurnIndicator = (
                     resetRequired
                         ? "Game Over"
                         : (
-                            isMyTurn ? "Your Turn" : `${participants[turn]}'s Turn`
+                            isMyTurn ? "Your Turn" : `${turn === "Unset" ? "No-one": participants[turn]}'s Turn`
                         )
                 }
             </div>

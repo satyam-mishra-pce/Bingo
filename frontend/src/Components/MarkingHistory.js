@@ -22,7 +22,7 @@ const MarkingHistory = (
                     return (
                         <li key={'num-' + number}>
                         <div className='player-name'>{markMap[number]}</div>
-                        <div className='number'>{number}</div>
+                        <div className='number default-cursor'>{number}</div>
                         </li>
                     )
                     })

@@ -19,7 +19,7 @@
     border: 1px solid rgb(var(--fg-50), 0.3);
     height: 200px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     margin-bottom: 10px;
 
     background-position: center;
@@ -34,7 +34,7 @@
     background: rgb(var(--bg-100));
     padding: 14px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     border: 1px solid rgb(var(--fg-50), 0.3);
     display: flex;
     flex-direction: row;
@@ -50,12 +50,6 @@
   
   #name-input {
     width: calc(100% - 80px);
-    height: 40px;
-    padding-left: 10px;
-    font-size: 18px;
-    border: 1px solid rgb(var(--fg-50), 0.3);
-    border-radius: 4px;
-  
   }
   
   
@@ -70,8 +64,11 @@
   }
   
   #tab-slider {
-    height: 32px;
-    width: 202px;
+    height: 36px;
+    width: 209px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     border-radius: 8px;
     border: 1px solid rgb(var(--fg-50), 0.3);
     background: rgb(var(--bg-100));
@@ -81,20 +78,16 @@
     width: 100px;
     height: 30px;
     border: none;
+    border-radius: 7px;
     background: none;
     font-size: 16px;
-  }
-  
-  
-  #tab-slider button.tab-option:nth-child(1) {
-    border-radius: 7px 0 0 7px;
-  }
-  #tab-slider button.tab-option:nth-child(2) {
-    border-radius: 0 7px 7px 0;
+    color: rgb(var(--accent-primary));
+    cursor: pointer;
+    transition: 200ms ease ;
   }
   
   #tab-slider button.tab-option:hover {
-    background: rgb(var(--accent-primary), 0.3);
+    background: rgb(var(--accent-primary), 0.1);
   }
   
   #tab-slider button.tab-option.active {
@@ -109,17 +102,20 @@
   /* Create Room Section */
   #create-room-section {
     background: rgb(var(--bg-100));
-    padding: 14px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     border: 1px solid rgb(var(--fg-50), 0.3);
+  }
+  
+  #create-room-form {
+    padding: 14px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: stretch;
   }
-  
-  #create-room-section span.label {
+
+  #create-room-form label {
     font-size: 20px;
     font-weight: bold;
     display: block;
@@ -128,77 +124,68 @@
   
   #limit-box {
     display: flex;
-    width: 100px;
     flex-direction: row;
-    border: 1px solid rgb(var(--bg-70), 0.5);
-    border-radius: 4px;
   }
   
-  /* #limit-box button {
+  #limit-box button {
+    height: 30px;
     width: 30px;
-    height: 40px;
-    background: rgb(var(--accent-primary));
+    border-radius: 15px;
     color: white;
-    border: none;
-    font-size: 18px;
-  } */
-  
-  #limit-box button.dec {
-    border-radius: 4px 0 0 4px;
-  }
-  
-  #limit-box button.inc {
-    border-radius: 0 4px 4px 0;
+    background: rgb(var(--accent-primary));
+    border: 1px solid rgb(var(--fg-90), 0.3);
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   #limit-box button:disabled{
-    background: rgb(var(--fg-10), 0.5);
+    background: rgb(var(--bg-90));
     color: black;
   }
   
   #limit-box div.limit {
-    width: 40px;
+    width: 60px;
+    margin: 0 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 18px;
+    border: 1px solid rgb(var(--fg-90), 0.3);
+    border-radius: 15px;
   }
-  
-  #create-room-btn {
-    /* height: 40px;
-    padding: 0 12px;
-    margin-left: 20px;
-    background: rgb(var(--accent-primary));
-    color: white;
-    border: none;
-    font-size: 16px; */
+
+  div.form-btn-grp {
+    padding: 14px;
+    background: rgb(var(--bg-90));
+    border-radius: 0 0 16px 16px;
+    border-top: 1px solid rgb(var(--fg-90), 0.3);
+    display: flex;
+    justify-content: right;
   }
-  
-  
-  
-  
-  
+
+
   
   /* Join Room Section  */
   
   #join-room-section {
     background: rgb(var(--bg-100));
-    padding: 14px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 16px;
     border: 1px solid rgb(var(--fg-50), 0.3);
     display: flex;
     flex-direction: column;
   }
   
-  #room-form {
+  #join-room-form {
+    padding: 14px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 10px;
   }
   
-  #room-form label {
+  #join-room-form label {
     font-size: 20px;
     font-weight: bold;
     width: 140px;
@@ -206,20 +193,30 @@
   
   #room-input {
     width: calc(100% - 140px);
-    height: 40px;
-    padding-left: 10px;
-    font-size: 18px;
-    border: 1px solid rgb(var(--fg-50), 0.3);
-    border-radius: 4px;
-  
   }
   
-  #join-room-btn {
-    height: 40px;
-    border-radius: 4px;
-    padding: 0 12px;
-    background: rgb(var(--accent-primary));
-    color: white;
-    border: none;
-    font-size: 16px;
+
+  /* Media Queries */
+  @media screen and (max-width: 620px) {
+
+    #lobby {
+      width: 90vw;
+    }
+
+    #hero {
+      height: 150px;
+    }
+
+    #name-section {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    #name-section label {
+      margin-bottom: 10px;
+    }
+
+    #name-input {
+      width: 100%;
+    }
   }

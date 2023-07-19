@@ -1,6 +1,9 @@
 
 div.game-frame {
-    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    max-width: 690px;
     margin: auto;
     position: absolute;
     top: 0;
@@ -20,7 +23,6 @@ div.game-frame.transitioning {
 
 .game-frame div.splitter div.game-board-wrapper {
     padding: 20px;
-    max-width: 340px;
 }
 
 .game-frame div.splitter div.game-board {
@@ -43,7 +45,7 @@ div.bingo-marker div.bingo-letter {
     align-items: center;
     width: 50px;
     height: 50px;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 22px;
     font-weight: bold;
 }
@@ -64,11 +66,24 @@ div.bingo-marker div.bingo-letter.marked {
 #bingo-grid button.grid-btn {
     height: 50px;
     width: 50px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid rgb(var(--fg-50), 0.3);
     background: rgb(var(--bg-100));
     font-size: 19px;
     pointer-events: none;
+    transition: border 100ms linear, transform 50ms linear;
+}
+
+#bingo-grid button.grid-btn:hover {
+    border: 2px solid rgb(var(--accent-primary));
+}
+
+#bingo-grid button.grid-btn:focus {
+    border: 2px solid rgb(var(--accent-primary));
+}
+
+#bingo-grid button.grid-btn:active {
+    transform: scale(0.92);
 }
 
 .game-board-wrapper.my-turn #bingo-grid button.grid-btn {
@@ -78,4 +93,37 @@ div.bingo-marker div.bingo-letter.marked {
 #bingo-grid button.grid-btn.marked {
     color: white;
     background: rgb(var(--accent-primary));
+}
+
+#bingo-grid button.grid-btn.marked:hover {
+    border: 1px solid rgb(var(--fg-50), 0.3);
+}
+
+#bingo-grid button.grid-btn.marked:focus {
+    border: 1px solid rgb(var(--fg-50), 0.3);
+}
+
+#bingo-grid button.grid-btn.marked:active {
+    transform: none;
+}
+
+
+@media screen and (max-width: 690px) {
+
+    div.game-frame {
+        height: calc(100dvh - 60px);
+        border-radius: 0;
+        width: 100vw;
+    }
+    
+    .game-frame div.splitter {
+        grid-template-columns: 1fr;
+        grid-auto-rows: min-content;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    div.game-board-wrapper {
+        width: 100vw;
+    }
 }
