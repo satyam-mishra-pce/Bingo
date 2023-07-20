@@ -5,7 +5,8 @@ import "./../css/components/roomoptions.css";
 const RoomOptions = (
     {
         roomID,
-        participants
+        participants,
+        setParticipantsViewVisibility
     }
 ) => {
 
@@ -23,7 +24,7 @@ const RoomOptions = (
                 </button>
             </div>
 
-            <button className='sec-btn participants-btn'>
+            <button className='sec-btn participants-btn' onClick={() => setParticipantsViewVisibility(true)}>
             <i className="fa-regular fa-user-group"></i> {Object.keys(participants).length}
             </button>
 

@@ -217,6 +217,7 @@ let serverURL = (
           />
           <Game
             socket={socket} 
+            leaveRoom = {leaveRoom}
           />
         </div>
       </div>

@@ -6,18 +6,21 @@ import './css/game.css';
 import RoomOptions from './Components/RoomOptions';
 import TurnIndicator from './Components/TurnIndicator';
 import MarkingHistory from './Components/MarkingHistory';
+import ParticipantsView from './Components/ParticipantsView';
 import WinPopup from './Components/WinPopup';
 
 import { getRandomNumbers } from './functions';
 
 
 const Game = ({
-  socket
+  socket,
+  leaveRoom
 }) => {
 
   const [roomID, setRoomID] = useState("00ROOM");
   const [turn, setTurn] = useState("Unset");
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState({});
+  const [participantsViewVisibility, setParticipantsViewVisibility] = useState(false);
   const [gridNumbers, setGridNumbers] = useState(getRandomNumbers(25));
   const [winningCriteria, setWinningCriteria] = useState([]);
   const [markingHistory, setMarkingHistory] = useState({});
@@ -228,7 +231,7 @@ const Game = ({
   return (
     <div className='game-frame'>
 
-      < RoomOptions roomID={roomID} participants={participants} />
+      < RoomOptions roomID={roomID} participants={participants} setParticipantsViewVisibility={setParticipantsViewVisibility} />
 
       <div className='splitter'>
 
@@ -274,6 +277,13 @@ const Game = ({
 
       </div>
 
+      <ParticipantsView 
+        userID = {socket.id} 
+        participants = {participants} 
+        participantsViewVisibility={participantsViewVisibility} 
+        setParticipantsViewVisibility={setParticipantsViewVisibility}
+        leaveRoom = {leaveRoom}
+      />
       <WinPopup socket={socket} setHaltMode={setHaltMode} setResetRequired={setResetRequired} />
     </div>
   )

@@ -1,0 +1,132 @@
+#participants-view-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: opacity 250ms linear;
+}
+
+#participants-view-backdrop.nodisplay {
+    display: none;
+}
+
+#participants-view-backdrop.invisible {
+    opacity: 0.1;
+}
+
+.participants-view-box {
+    height: 80dvh;
+    width: 80dvh;
+    max-height: 500px;
+    max-width: 350px;
+    background: rgb(var(--bg-90));
+    border-radius: 16px;
+    border: 1px solid rgb(var(--fg-50), 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.participants-view-box .title {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 0 20px;
+    border-bottom: 1px solid rgb(var(--fg-50), 0.3);
+}
+
+.participants-view-box .title h1 {
+    font-size: 20px;
+    /* font-weight: normal; */
+}
+
+.participants-view-box .title button.close-btn {
+    height: 30px;
+    width: 30px;
+    border: none;
+    border-radius: 15px;
+    background: rgb(var(--bg-60), 0.4);
+    transition: 150ms;
+    font-size: 16px;
+}
+
+.participants-view-box .title button.close-btn:hover {
+    background: rgb(200, 0, 0, 0.4);
+    color: rgb(200, 0, 0);
+}
+
+
+
+
+.participants-view-box ul.participants-list {
+    flex: 1 1;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 10px 10px 5px 10px;
+}
+
+ul.participants-list li.participant {
+    height: 60px;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgb(var(--fg-50), 0.3);
+    background: rgb(var(--bg-100));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+li.participant div.participant-info {
+    display: flex;
+    align-items: center;
+}
+
+div.participant-info div.profile-placeholder {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgb(var(--fg-50), 0.3);
+    margin: 0 10px;
+}
+
+div.participant-info div.display-name {
+    font-size: 18px;
+}
+
+li.participant div.user-options {
+
+}
+
+div.user-options button.leave-btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: rgb(255, 22, 22);
+    margin-right: 13px;
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    transition: 200ms;
+}
+
+
+div.user-options button.leave-btn:focus {
+    border: 1px solid rgb(255, 22, 22);
+    background: transparent;
+}
+
+div.user-options button.leave-btn:hover{
+    background: rgb(255, 22, 22);
+    color: white;
+}
