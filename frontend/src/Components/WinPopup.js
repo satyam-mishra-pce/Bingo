@@ -17,23 +17,33 @@ const WinPopup = (
     const confettiCanvasRef = useRef(null);
     const [jsConfetti, setJsConfetti] = useState(null);
     const [isWinner, setWinner] = useState(false);
-    
+    const [invisible, setInvisible] = useState(true);
+    const [nodisplay, setNodisplay] = useState(true);
+
+
+    // Inititialize confettiCanvas in the first render
     useEffect(() => {
         if (confettiCanvasRef.current) {
             initJSConfetti();
         }
-    }, [])
+    }, []);
+
     
+    // Listen for wins.
     useEffect(() => {
         socket.on("game-over", data => {
+            
+            // Data hash format is: id#name
             const datahash = data.winnerID + "#" + data.winnerName;
-            console.log("Got a winner:", datahash);
+            
+            // Update the winner list:
             setWinnerList( prev => {
                 return [...prev, datahash];
             });
+
+            // If the winner is user.
             if (data.winnerID === socket.id) {
                 setWinner(true);
-                setHaltMode(true);
                 setTimeout(() => {
                     celebrate(); 
                 }, 250);
@@ -46,21 +56,22 @@ const WinPopup = (
     })
     
     
+    // Check if the game is over using the winners array
     useEffect(() => {
-        // console.log(winnerList);
         if (winnerList.length === 0) {
             setGameOver(false);
         } else {
+            setHaltMode(true);
             setGameOver(true);
             setResetRequired(true);
         }
     }, [winnerList]);
 
 
+    // Show the popup if the game is over
     useEffect(() => {
         if (isGameOver) {
             startPopup();
-        } else {
         }
     }, [isGameOver]);
 
@@ -77,31 +88,27 @@ const WinPopup = (
     }
 
     const startPopup = () => {
-        const backDrop = document.getElementById("win-popup-backdrop");
-        backDrop.classList.remove("nodisplay");
+        setNodisplay(false);
         setTimeout(() => {
-            backDrop.classList.remove("invisible");
+            setInvisible(false);
         }, 100);
     }
 
     const closePopup = () => {
-        const backDrop = document.getElementById("win-popup-backdrop");
-        backDrop.classList.add("invisible");
+        setInvisible(true);
         setTimeout(() => {
-            backDrop.classList.add("nodisplay");
-        }, 500);
-        setGameOver(false);
-        setWinnerList([]);
-        setWinner(false);
+            setNodisplay(true);
+            
+            // Reset the state variables on close.
+            setWinnerList([]);
+            setWinner(false);
+        }, 200);
+
     }
 
 
     return (
-        <div id='win-popup-backdrop' onClick={
-            () => {
-                    // setWinnerList([...winnerList, "user" + winnerList.length + "#ABCDEFGHIJKLMNOPQRST"]);
-            }
-        } className='invisible nodisplay'>
+        <div id='win-popup-backdrop' className={`${nodisplay ? "nodisplay": ""} ${invisible ? "invisible" : ""}`}>
             <canvas id='confetti-canvas' ref={confettiCanvasRef}></canvas>
             <div id='win-popup'>
                 <div className='title'>

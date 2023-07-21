@@ -8,12 +8,13 @@ app.use(cors());
 const http = require('http');
 const server = http.createServer(app);
 
-
 const io = new Server(server, {
   cors: {
     origin: "*"
   }
 })
+
+const maxNameLength = 20;
 
 io.on("connection", socket => {
 
@@ -23,7 +24,16 @@ io.on("connection", socket => {
   // Handle Create and Join Room:
   socket.on("create-and-join-room", async data => {
     const limit = data.limit;
-    const displayName = data.displayName;
+    let displayName = data.displayName.trim();
+    if (displayName.length > maxNameLength) {
+        displayName = displayName.slice(0, maxNameLength);
+    }
+    if (displayName == "") {
+        const randomNum = Math.floor((Math.random() * 10000) + 1);
+        const leadingZeroes = "0".repeat(5 - ("" + randomNum).length);
+        displayName = `Player ${leadingZeroes}${randomNum}`;
+    }
+
 
     try {
       const response = await createAndJoinRoom(limit, socket, displayName, io);
@@ -54,8 +64,16 @@ io.on("connection", socket => {
 
   // Handle Join Room:
   socket.on("join-room", data => {
-    const roomID = data.roomID;
-    const displayName = data.displayName;
+    const roomID = data.roomID.toUpperCase();
+    let displayName = data.displayName.trim();
+    if (displayName.length > maxNameLength) {
+        displayName = displayName.slice(0, maxNameLength);
+    }
+    if (displayName == "") {
+        const randomNum = Math.floor((Math.random() * 10000) + 1);
+        const leadingZeroes = "0".repeat(5 - ("" + randomNum).length);
+        displayName = `Player ${leadingZeroes}${randomNum}`;
+    }
 
     try {
       const response = joinRoom(roomID, socket, displayName, io);

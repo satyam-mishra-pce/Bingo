@@ -18,7 +18,7 @@
 }
 
 #participants-view-backdrop.invisible {
-    opacity: 0.1;
+    opacity: 0;
 }
 
 .participants-view-box {
@@ -33,6 +33,12 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    transition: 200ms ease-out;
+}
+
+#participants-view-backdrop.invisible .participants-view-box{
+    opacity: 0.1;
+    transform: scale(0.4);
 }
 
 .participants-view-box .title {

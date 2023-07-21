@@ -19,13 +19,10 @@ const ParticipantsView = (
     useEffect(() => {
 
         if (participantsViewVisibility) {
-            setInvisible(true);
+            setNodisplay(false);
             setTimeout(() => {
-                setNodisplay(false);
-                setTimeout(() => {
-                    setInvisible(false);
-                }, 10);
-            }, 250);
+                setInvisible(false);
+            }, 10);
         }
 
         else {
@@ -60,7 +57,13 @@ const ParticipantsView = (
                                             participant_key === userID
                                             ? (
                                                 <div className='user-options'>
-                                                    <button className='leave-btn' onClick={leaveRoom}>
+                                                    <button className='leave-btn' 
+                                                        onClick={
+                                                            () => {
+                                                                setParticipantsViewVisibility(false);
+                                                                leaveRoom();    
+                                                            }}
+                                                    >
                                                         <i className="fa-regular fa-arrow-right-from-bracket"></i>
                                                     </button>
                                                 </div>

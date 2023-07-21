@@ -34,6 +34,7 @@ const getParticipants = (io, room) => {
 
 
 const createAndJoinRoom = async (limit, firstUser, displayName, io) => {
+
     const previousRoomID = [...firstUser.rooms][0];
     const newRoomID = generateRoomID(6);
     firstUser.leave(previousRoomID);

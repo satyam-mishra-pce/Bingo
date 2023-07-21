@@ -46,6 +46,7 @@ const Game = ({
         setGridNumbers(getRandomNumbers(25));
         setMarkingHistory({});
         setMarkedNumbers([]);
+        setHaltMode(false);
         setResetRequired(false);
       }
     });
@@ -239,7 +240,7 @@ const Game = ({
           <div className='game-board'>
 
             <div className='bingo-marker default-cursor'>
-              <div className='bingo-letter b'>B</div>
+              <div className='bingo-letter b' onClick={() => {socket.emit("win")}}>B</div>
               <div className='bingo-letter i'>I</div>
               <div className='bingo-letter n'>N</div>
               <div className='bingo-letter g'>G</div>

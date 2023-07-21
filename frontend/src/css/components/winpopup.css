@@ -6,12 +6,12 @@
     bottom: 0;
     z-index: 100;
     display: flex;
+    opacity: 1;
     justify-content: center;
     align-items: center;
     background: rgb(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    perspective: 1000px;
-    transition: 500ms linear;
+    transition: 200ms linear;
 }
 
 #win-popup-backdrop.nodisplay {
@@ -19,8 +19,7 @@
 }
 
 #win-popup-backdrop.invisible {
-    backdrop-filter: blur(0);
-    background: rgb(0, 0, 0, 0);
+    opacity: 0;
 }
 
 #confetti-canvas {
@@ -36,12 +35,11 @@
     border: 1px solid rgb(var(--fg-50), 0.5);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     transition: 300ms ease-out;
-    transform-style: preserve-3d;
 }
 
 #win-popup-backdrop.invisible #win-popup {
-    transform: scale(0.5) translateY(60px) rotateX(15deg);
-    opacity: 0;
+    transform: scale(0.2);
+    opacity: 0.2;
 }
 
 #win-popup .title {
@@ -124,28 +122,6 @@
     padding: 10px;
     display: flex;
     justify-content: flex-end;
-}
-
-/* #win-popup div.btn-group butt */
-
-@keyframes popup-entrance {
-    0% {
-        transform: scale(0.5) translateY(60px) rotateX(15deg);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1) translateY(0) rotateX(0deg);
-        opacity: 1;
-    }
-}
-
-@keyframes backdrop-entrance {
-    0% {
-        backdrop-filter: blur(0px);
-    }
-    100% {
-        backdrop-filter: blur(10px);
-    }
 }
 
 
