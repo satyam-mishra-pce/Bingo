@@ -132,3 +132,6 @@ dist
 
 # frontend build
 frontend/build/
+
+# vscode generated files
+.vscode

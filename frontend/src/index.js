@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import { createPortal } from 'react-dom';
 import io from 'socket.io-client';
 
 import './css/index.css';
@@ -8,6 +9,8 @@ import Splash from './Components/Splash';
 import Lobby from './Lobby';
 import HeaderStrip from './Components/HeaderStrip';
 import Game from './Game';
+
+import Toast from './Components/Toast';
 
 let serverURL = (
   document.URL.startsWith("https://bingostreaks.web.app/") || document.URL.startsWith("https://bingostreaks.firebaseapp.com")
@@ -23,7 +26,41 @@ const App = () => {
   const [isSocketConnected, setSocketConnected] = useState(false);
   const [isSplashAnimating, setSplashAnimating] = useState(false);
   const [view, setView] = useState(0);
+  const [toastObjects, setToastObjects] = useState([])
   const interactionPanelRef = useRef(undefined);
+
+  const addToast = (
+    id, message,
+    hasButton = false, 
+    buttonText = "", 
+    buttonFunction = () => {},
+    tooltipContent = ""
+  ) => {
+    setToastObjects(prev => {
+      if (prev.length === 4) {
+        prev.shift();
+      }
+      return [
+        ...prev,
+        {
+          id, message, hasButton, buttonText, buttonFunction, tooltipContent
+        }
+      ];
+    })
+  }
+
+  const removeToast = toastID => {
+    setToastObjects(prev => {
+      const newObjects = [];
+      for (let obj of prev) {
+        if (obj.id === toastID)
+        continue
+
+        newObjects.push(obj);
+      }
+      return [...newObjects]
+    });
+  }
 
   // Function to animate between views in InteractionPanel
   const animateViews = (parentRef, currentPositionIndex, nextPositionIndex) => {
@@ -109,6 +146,8 @@ const App = () => {
     }
   }, []);
 
+
+  // Remove the splash once animation is complete and socket is connected.
   useEffect(() => {
     if (isSocketConnected && !isSplashAnimating) {
       if (interactionPanelRef.current === undefined)
@@ -152,13 +191,23 @@ const App = () => {
 
     socket.on("create-and-join-room", data => {
       socket.off("create-and-join-room");
+      const id = Date.now() + Math.floor(Math.random() * 10000);
       if (data.success) {
-        console.log(`You created and joined room.`);
+        addToast(
+          id, 
+          "You joined a fresh room. You can invite your friends now.", 
+          true, 
+          "Copy Room Code", 
+          () => {
+            navigator.clipboard.writeText(data.response.roomID);
+          }, 
+          "Copied!"
+        );
         socket.displayName = username;
         animateViews(interactionPanelRef, 0, 1);
         setView(1);
       } else {
-        console.log("Room creation failed:", data.response.message);
+        addToast(id, `Could not create room: ${data.response.message}`);
       }
     })
 
@@ -178,13 +227,23 @@ const App = () => {
 
     socket.on("join-room", data => {
       socket.off("join-room");
+      const id = Date.now() + Math.floor(Math.random() * 10000);
       if (data.success) {
-        console.log(`You joined the room.`);
+        addToast(
+          id, 
+          "You joined a room. You can also invite your friends.", 
+          true, 
+          "Copy Room Code", 
+          () => {
+            navigator.clipboard.writeText(data.response.roomID);
+          }, 
+          "Copied!"
+        );
         socket.displayName = username;
         animateViews(interactionPanelRef, 0, 1);
         setView(1);
       } else {
-        console.log("Could not join Room:", data.response.message);
+        addToast(id, `Could not join room: ${data.response.message}`);
       }
     })
   }
@@ -194,12 +253,13 @@ const App = () => {
     socket.emit("leave-room");
     socket.on("leave-room", data => {
       socket.off("leave-room");
+      const id = Date.now() + Math.floor(Math.random() * 10000);
       if (data.success) {
-        console.log("You left the room successfully.");
+        addToast(id, "You left the room.");
         animateViews(interactionPanelRef, 1, 0);
         setView(0);
       } else {
-        console.log("You could not leave the room:", data.response.message);
+        addToast(id, `Could not leave the room: ${data.response.message}`);
       }
     })
   }
@@ -218,8 +278,29 @@ const App = () => {
           <Game
             socket={socket}
             leaveRoom={leaveRoom}
+            addToast={addToast}
           />
         </div>
+      </div>
+
+      <div id = "toasts-container">
+        {
+          // Toast Messages
+          toastObjects.map((toastObject, index) => {
+            const isLast = index === toastObjects.length - 1;
+            return <Toast 
+              key={toastObject.id}
+              id={toastObject.id}
+              message={toastObject.message} 
+              hasButton={toastObject.hasButton} 
+              buttonText={toastObject.buttonText} 
+              buttonFunction={toastObject.buttonFunction} 
+              isLast={isLast}
+              dispose={removeToast} 
+              tooltipContent={toastObject.tooltipContent}
+            />
+          })
+        }
       </div>
     </>
   );

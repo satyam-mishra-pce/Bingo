@@ -1,5 +1,7 @@
 import React from "react";
 
+import TooltipButton from "./TooltipButton";
+
 import "./../css/components/roomoptions.css";
 
 const RoomOptions = (
@@ -19,9 +21,17 @@ const RoomOptions = (
 
             <div className='room-box'>
                 <div className='room-id-text'>{roomID.toUpperCase()}</div>
-                <button className='copy-btn sec-btn' onClick={copyRoomID}>
-                    <i className="fa-regular fa-clipboard"></i>
-                </button>
+                <TooltipButton 
+                    classList="copy-btn sec-btn" 
+                    buttonFunction={copyRoomID} 
+                    buttonContent={
+                        <>
+                            <i className="fa-regular fa-clipboard"></i>
+                        </>
+                    }
+                    tooltipDirection={2}
+                    tooltipContent={"Copied!"}
+                />
             </div>
 
             <button className='sec-btn participants-btn' onClick={() => setParticipantsViewVisibility(true)}>

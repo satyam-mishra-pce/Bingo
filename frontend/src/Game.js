@@ -14,7 +14,8 @@ import { getRandomNumbers } from './functions';
 
 const Game = ({
   socket,
-  leaveRoom
+  leaveRoom,
+  addToast
 }) => {
 
   const [roomID, setRoomID] = useState("00ROOM");
@@ -66,13 +67,26 @@ const Game = ({
         return;
       }
 
+      const id = Date.now() + Math.floor(Math.random() * 10000);
+      if (data.event === "join-room" && data.fromID !== socket.id) {
+        addToast(id, data.fromName + " joined the room.");
+      }
+
+      if (data.event === "leave-room") {
+        addToast(id, data.fromName + " left the room.");
+      }
+
+      if (data.event === "disconnect") {
+        addToast(id, data.fromName + " disconnected.");
+      }
+
       console.log("Participants changed:");
       setParticipants(data.response.participants);
       setTurn(data.response.turn);
       setRoomID(data.response.roomID);
     })
 
-    // Handle a mark request
+    // Handle a mark response
     socket.on('mark-number', data => {
       setHaltMode(false);
 
@@ -92,7 +106,7 @@ const Game = ({
       setMarkingHistory(prev => {
         return {
           ...prev,
-          [number]: [data.from]
+          [number]: [data.fromName]
         }
       });
 
@@ -104,13 +118,20 @@ const Game = ({
     socket.on('reset', data => {
       if (data.success) {
 
+        const id = Date.now() + Math.floor(Math.random() * 10000);
+        addToast(id, "Game had been reset.")
+
         setGridNumbers(getRandomNumbers(25));
         setMarkingHistory({});
         setMarkedNumbers([]);
         setHaltMode(false);
         setResetRequired(false);
 
+
       } else {
+
+        const id = Date.now() + Math.floor(Math.random() * 10000);
+        addToast(id, "Could not reset the game.");
 
         console.log(data.response.message);
       }

@@ -27,7 +27,7 @@ const TurnIndicator = (
                 {
                     resetRequired
                         ? (
-                            <button onClick={reset}>Play Again</button>
+                            <button onClick={reset} className="primary-btn">Play Again</button>
                         )
                         : ( 
                             isMyTurn ? (

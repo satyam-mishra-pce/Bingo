@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 
 import "./css/lobby.css";
-import HeroImage from "./media/hero.svg";
+import HeroImage from "./media/hero.webp";
 
 const Lobby = ({
     createAndJoinRoom,

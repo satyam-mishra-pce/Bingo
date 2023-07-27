@@ -1,11 +1,11 @@
-const express = require('express');
-const cors = require('cors');
-const { Server } = require('socket.io');
-const { asyncGetRoom, getRoom, getParticipants, createAndJoinRoom, joinRoom, getNextTurn, leaveRoom } = require('./functions');
+const express = require("express");
+const cors = require("cors");
+const { Server } = require("socket.io");
+const { asyncGetRoom, getRoom, getParticipants, createAndJoinRoom, joinRoom, getNextTurn, leaveRoom } = require("./functions");
 
 const app = express();
 app.use(cors());
-const http = require('http');
+const http = require("http");
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -39,13 +39,14 @@ io.on("connection", socket => {
       const response = await createAndJoinRoom(limit, socket, displayName, io);
 
       socket.emit("create-and-join-room", {
-        "success": true
+        "success": true,
+        response
       })
       socket.emit("participants-changed", {
         "success": true,
         response,
-        "from-name": displayName,
-        "from-id": socket.id,
+        "fromName": displayName,
+        "fromID": socket.id,
         "event": "create-and-join-room"
       })
 
@@ -78,13 +79,14 @@ io.on("connection", socket => {
     try {
       const response = joinRoom(roomID, socket, displayName, io);
       socket.emit("join-room", {
-        "success": true
+        "success": true,
+        response
       });
       socket.in(roomID).emit("participants-changed", {
         "success": true,
         response,
-        "from-name": displayName,
-        "from-id": socket.id,
+        "fromName": displayName,
+        "fromID": socket.id,
         "event": "join-room"
       })
 
@@ -113,13 +115,13 @@ io.on("connection", socket => {
     const nextTurn = getNextTurn(participants, roomID, io);
 
     socket.in(roomID).emit("mark-number", {
-      'success': true,
-      'response': {
-        'number': data.number,
-        'turn': nextTurn,
+      "success": true,
+      "response": {
+        "number": data.number,
+        "turn": nextTurn,
       },
-      'event': 'mark-number',
-      'from': socket.displayName
+      "event": "mark-number",
+      "fromName": socket.displayName
     })
     
   })
@@ -132,8 +134,8 @@ io.on("connection", socket => {
     const displayName = socket.displayName;
     const room = getRoom(io, roomID);
     socket.in(roomID).emit("game-over", {
-      'winnerID': socket.id,
-      'winnerName': displayName
+      "winnerID": socket.id,
+      "winnerName": displayName
     })
   })
 
@@ -146,19 +148,19 @@ io.on("connection", socket => {
     const displayName = socket.displayName;
     if (room["status"] === "waiting") {
       socket.in(roomID).emit("reset", {
-        'success': false,
-        'response': {
-          'message': 'Room is already ready for a new game.'
+        "success": false,
+        "response": {
+          "message": "Room is already ready for a new game."
         },
-        'event': "reset",
-        'from': displayName
+        "event": "reset",
+        "fromName": displayName
       })
     } else {
       room["status"] = "waiting";
       socket.in(roomID).emit("reset", {
-        'success': true,
-        'event': "reset",
-        'from': displayName
+        "success": true,
+        "event": "reset",
+        "fromName": displayName
       })
     }
   })
@@ -178,8 +180,8 @@ io.on("connection", socket => {
         socket.in(roomID).emit("participants-changed", {
         "success": true,
         response,
-        "from-name": socket.displayName,
-        "from-id": socketid,
+        "fromName": socket.displayName,
+        "fromID": socketid,
         "event": "leave-room"
         })
 
@@ -221,7 +223,7 @@ io.on("connection", socket => {
       socket.in(roomID).emit("participants-changed", {
         "success": true,
         response,
-        "from": socket.displayName,
+        "fromName": socket.displayName,
         "event": "disconnect"
       })
 

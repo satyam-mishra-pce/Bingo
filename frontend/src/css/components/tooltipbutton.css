@@ -1,0 +1,107 @@
+button.tooltip-btn {
+    position: relative;
+}
+
+button.tooltip-btn .tooltip {
+    position: absolute;
+    background: white;
+    border: 1px solid rgb(var(--fg-50), 0.3);
+    border-radius: 8px;
+    box-shadow: 0 6px 10px rgb(var(--fg-100), 0.1);
+    pointer-events: none;
+    transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+
+button.tooltip-btn .tooltip.top {
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: top left;
+}
+
+button.tooltip-btn .tooltip.top.invisible {
+    transform: scale(0.2) translateX(-50%);
+    opacity: 0;
+}
+
+button.tooltip-btn .tooltip.right {
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: top right;
+}
+
+button.tooltip-btn .tooltip.right.invisible {
+    transform: scale(0.2) translateY(-50%);
+    opacity: 0;
+}
+
+button.tooltip-btn .tooltip.bottom {
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: bottom left;
+}
+
+button.tooltip-btn .tooltip.bottom.invisible {
+    transform: scale(0.2) translateX(-50%);
+    opacity: 0;
+}
+
+button.tooltip-btn .tooltip.left {
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: top left;
+}
+
+button.tooltip-btn .tooltip.left.invisible {
+    transform: scale(0.2) translateX(-50%);
+    opacity: 0;
+}
+
+
+.tooltip .tooltip-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 10px;
+    color: rgb(var(--fg-100));
+}
+
+.tooltip .tooltip-inner .tooltip-corner {
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    border: 1px solid rgb(var(--fg-50), 0.3);
+    background: white;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 6px 0 0 0;
+}
+
+.tooltip-corner.top {
+    transform: rotateZ(45deg);
+    top: -8px;
+}
+
+.tooltip-corner.left {
+    transform: rotateZ(-45deg);
+    left: -8px;
+}
+
+.tooltip-corner.right {
+    transform: rotateZ(135deg);
+    right: -8px;
+}
+
+.tooltip-corner.bottom {
+    transform: rotateZ(-135deg);
+    bottom: -8px;
+}
+
+.tooltip-form {
+    pointer-events: all;
+}
