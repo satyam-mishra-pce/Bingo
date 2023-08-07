@@ -7,6 +7,11 @@ div.game-frame {
     margin: auto;
     position: absolute;
     top: 0;
+    opacity: 0;
+}
+
+div.game-frame.active {
+    opacity: 1;
 }
 
 div.game-frame.transitioning {
@@ -56,6 +61,8 @@ div.bingo-marker div.bingo-letter.marked {
     background: rgb(var(--accent-primary), 0.1);
 }
 
+
+
 #bingo-grid {
     display: grid;
     grid-template-columns: auto auto auto auto auto;
@@ -90,7 +97,7 @@ div.bingo-marker div.bingo-letter.marked {
     pointer-events: initial;
 }
 
-#bingo-grid button.grid-btn.marked {
+#bingo-grid button.grid-btn.marked, #bingo-grid button.grid-btn.temp-marked {
     color: white;
     background: rgb(var(--accent-primary));
 }

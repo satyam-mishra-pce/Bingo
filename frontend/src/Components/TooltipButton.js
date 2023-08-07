@@ -5,14 +5,14 @@ import "./../css/components/tooltipbutton.css";
 const TooltipButton = (
     {
         id,
-        classList = "",
+        buttonClassList = "",
         buttonContent = "",
         buttonFunction = () => {},
         buttonDisabled = false,
         tooltipDirection = 0,
         tooltipContent = 0,
         autoCloseTooltip = true,
-        tooltipForm = <></>
+        tooltipForm = <></>,
     }
 ) => {
 
@@ -40,7 +40,7 @@ const TooltipButton = (
   return (
     <button 
       disabled={buttonDisabled}
-      className={"tooltip-btn " + classList} 
+      className={"tooltip-btn " + buttonClassList} 
       onClick={
         () => {
           buttonFunction();

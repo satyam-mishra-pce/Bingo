@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import './../css/components/participantsview.css';
+import AsyncButton from './AsyncButton';
+import DisabledContext from '../Contexts/DisabledContext';
 
 const ParticipantsView = (
     {
@@ -14,6 +16,9 @@ const ParticipantsView = (
 
     const [invisible, setInvisible] = useState(true);
     const [nodisplay, setNodisplay] = useState(true);
+
+    const isDisabled = useContext(DisabledContext);
+
     useEffect(() => {
 
         if (participantsViewVisibility) {
@@ -37,7 +42,7 @@ const ParticipantsView = (
             <div className='participants-view-box'>
                 <div className='title'>
                     <h1>Participants</h1>
-                    <button className='close-btn' onClick={() => setParticipantsViewVisibility(false)}>
+                    <button className='close-btn' onClick={() => setParticipantsViewVisibility(false)} disabled = {isDisabled}>
                         <i className='fa-regular fa-xmark'></i>
                     </button>
                 </div>
@@ -52,23 +57,21 @@ const ParticipantsView = (
                                             <div className='display-name'>{participants[participant_key]}</div>
                                         </div>
                                         {
-                                            participant_key === userID
-                                            ? (
-                                                <div className='user-options'>
-                                                    <button className='leave-btn' 
-                                                        onClick={
-                                                            () => {
-                                                                setParticipantsViewVisibility(false);
-                                                                leaveRoom();    
-                                                            }}
-                                                    >
-                                                        <i className="fa-regular fa-arrow-right-from-bracket"></i>
-                                                    </button>
-                                                </div>
-                                            )
-                                            : (
-                                                <></>
-                                            )
+                                            participant_key === userID &&
+                                            <div className='user-options'>
+                                                <AsyncButton 
+                                                    id='leave-rooom-btn'
+                                                    classList='leave-btn'
+                                                    onClick={{
+                                                        func: leaveRoom,
+                                                        args: [],
+                                                        positiveCallback: () => {setParticipantsViewVisibility(false)}
+                                                    }}
+                                                    content={<i className="fa-regular fa-arrow-right-from-bracket"></i>}
+                                                    loadingFilter="white"
+                                                    disabled={isDisabled}
+                                                />
+                                            </div>
                                         }
                                     </li>
                             )

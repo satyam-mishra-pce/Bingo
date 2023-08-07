@@ -118,21 +118,29 @@ div.user-options button.leave-btn {
     background: transparent;
     border: none;
     font-size: 18px;
-    color: rgb(255, 22, 22);
+    color: rgb(var(--red));
     margin-right: 13px;
     height: 34px;
-    width: 34px;
+    padding: 8px;
     border-radius: 8px;
     transition: 200ms;
 }
 
+div.user-options button.leave-btn.loading {
+    background: rgb(var(--red));
+    color: white;
+}
 
 div.user-options button.leave-btn:focus {
-    border: 1px solid rgb(255, 22, 22);
+    border: 1px solid rgb(var(--red));
     background: transparent;
 }
 
 div.user-options button.leave-btn:hover{
-    background: rgb(255, 22, 22);
+    background: rgb(var(--red));
     color: white;
+}
+
+div.user-options button.leave-btn:disabled {
+    filter: brightness(0.97);
 }

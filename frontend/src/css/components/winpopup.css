@@ -71,6 +71,11 @@
     color: rgb(200, 0, 0);
 }
 
+div.winner-caption {
+    padding: 20px 20px 0 20px;
+    font-size: 20px;
+}
+
 #winner-list {
     list-style-type: none;
     display: flex;

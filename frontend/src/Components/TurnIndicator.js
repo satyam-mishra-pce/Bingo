@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "./../css/components/turnindicator.css";
+import DisabledContext from "../Contexts/DisabledContext";
 
 const TurnIndicator = (
     {
@@ -9,9 +10,12 @@ const TurnIndicator = (
         turn,
         started,
         resetRequired,
-        reset
+        reset,
     }
 ) => {
+
+    const isDisabled = useContext(DisabledContext);
+
     return (
         <div id='turn-indicator'>
             <div className='player-indicator'>
@@ -27,7 +31,7 @@ const TurnIndicator = (
                 {
                     resetRequired
                         ? (
-                            <button onClick={reset} className="primary-btn">Play Again</button>
+                            <button onClick={reset} className="primary-btn" disabled = {isDisabled}>Play Again</button>
                         )
                         : ( 
                             isMyTurn ? (

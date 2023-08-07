@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './../css/components/winpopup.css';
-import JSConfetti from 'js-confetti';
-
+import ReactCanvasConfetti from 'react-canvas-confetti';
+import DisabledContext from '../Contexts/DisabledContext';
 
 const WinPopup = (
     {
@@ -14,19 +14,25 @@ const WinPopup = (
     const title = "Game Over";
     const [winnerList, setWinnerList] = useState([]);
     const [isGameOver, setGameOver] = useState(false);
-    const confettiCanvasRef = useRef(null);
-    const [jsConfetti, setJsConfetti] = useState(null);
     const [isWinner, setWinner] = useState(false);
     const [invisible, setInvisible] = useState(true);
     const [nodisplay, setNodisplay] = useState(true);
 
+    const isDisabled = useContext(DisabledContext);
 
-    // Inititialize confettiCanvas in the first render
-    useEffect(() => {
-        if (confettiCanvasRef.current) {
-            initJSConfetti();
-        }
-    }, []);
+    // confetti states:
+    const [fire, setFire] = useState(false);
+
+    const confettiStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 2000,
+        pointerEvents: 'none'
+    }
+
 
     
     // Listen for wins.
@@ -53,7 +59,7 @@ const WinPopup = (
         return () => {
             socket.off("game-over");
         }
-    })
+    }, [socket]);
     
     
     // Check if the game is over using the winners array
@@ -75,16 +81,11 @@ const WinPopup = (
         }
     }, [isGameOver]);
 
-    const initJSConfetti = () => {
-        const confettiCanvas = confettiCanvasRef.current;
-        setJsConfetti( new JSConfetti({ confettiCanvas }) );
-    }
-
-
     const celebrate = () => {
-        jsConfetti.addConfetti({
-            confettiRadius: 10
-        });
+        setFire(true);
+        setTimeout(() => {
+            setFire(false);
+        })
     }
 
     const startPopup = () => {
@@ -109,14 +110,25 @@ const WinPopup = (
 
     return (
         <div id='win-popup-backdrop' className={`${nodisplay ? "nodisplay": ""} ${invisible ? "invisible" : ""}`}>
-            <canvas id='confetti-canvas' ref={confettiCanvasRef}></canvas>
+            <ReactCanvasConfetti 
+                style={confettiStyle}
+                fire={fire}
+                particleCount={1200}
+                spread={120}
+                origin={{x: 0.5, y: 1.25}}
+                ticks={300}
+                startVelocity={100}
+                gravity={1.6}
+                scalar={1.15}
+            />
             <div id='win-popup'>
                 <div className='title'>
                     <h1>{title}</h1>
-                    <button className='close-popup-btn' onClick={closePopup}>
+                    <button className='close-popup-btn' onClick={closePopup} disabled={isDisabled}>
                         <i className='fa-regular fa-xmark'></i>
                     </button>
                 </div>
+                <div className='winner-caption'>Winner{winnerList.length === 1 ? " is" : "s are"}:</div>
 
                 <ul id='winner-list'>
                     {
@@ -147,13 +159,13 @@ const WinPopup = (
                 {isWinner 
                     ? (
                         <div className='btn-group'>
-                            <button className='primary-btn' onClick={(evt) => {
+                            <button disabled={isDisabled} className='primary-btn' onClick={(evt) => {
                                 const btn = evt.target;
-                                btn.disabled = true;
+                                btn.disabled = isDisabled || true;
                                 celebrate();
                                 setTimeout(() => {
-                                    btn.disabled = false;
-                                }, 1000);
+                                    btn.disabled = isDisabled || false;
+                                }, 2500);
                             }}>Celebrate</button>
                         </div>
                     )

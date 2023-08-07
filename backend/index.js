@@ -113,7 +113,7 @@ io.on("connection", socket => {
 
     const participants = getParticipants(io, room);
     const nextTurn = getNextTurn(participants, roomID, io);
-
+    
     socket.in(roomID).emit("mark-number", {
       "success": true,
       "response": {

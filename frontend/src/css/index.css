@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
 
+button {
+  color: var(--fg);
+}
+
 button.primary-btn {
   border: 1px solid rgb(var(--fg-50), 0.3);
   border-radius: 6px;
@@ -49,11 +53,17 @@ button.sec-btn:active {
 
 button.primary-btn:disabled, button.sec-btn:disabled {
   filter: saturate(0.5);
+  transform: none;
 }
 
 
 :root {
+
   --accent-primary: 0, 132, 255;
+  --red: 255, 59, 48;
+  --yellow: 255, 204, 0;
+  --green: 52, 199, 89;
+
   --fg-100: 0, 0, 0;
   --fg-90: 10, 10, 10;
   --fg-85: 15, 15, 15;
@@ -85,6 +95,9 @@ button.primary-btn:disabled, button.sec-btn:disabled {
 
   --filter-accent-blue: invert(44%) sepia(44%) saturate(7500%) hue-rotate(195deg) brightness(102%) contrast(103%);
   --filter-mid-grey: invert(56%) sepia(0%) saturate(127%) hue-rotate(179deg) brightness(102%) contrast(86%);
+  --filter-light-grey: invert(84%) sepia(0%) saturate(496%) hue-rotate(154deg) brightness(82%) contrast(90%);
+  --filter-white: invert(100%);
+
 }
 
 * {
@@ -159,6 +172,8 @@ html, body {
   min-width: 300px;
   max-width: 33vw;
 
+  z-index: 1000;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -225,5 +240,11 @@ html, body {
     max-width: none;
     width: 100%;
     align-items: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #splash {
+    transform: scale(0.65);
   }
 }

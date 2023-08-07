@@ -20,6 +20,7 @@ const Toast = ({
 }) => {
 
     const [toastState, setToastState] = useState(0);
+    const timeToLive = 6000;
 
     useEffect(() => {
         setTimeout(() => {
@@ -30,7 +31,7 @@ const Toast = ({
             setTimeout(() => {
                 dispose(id);
             }, 300);
-        }, 10000);
+        }, timeToLive);
     }, []);
 
     return (
@@ -49,8 +50,8 @@ const Toast = ({
                 <div className='btn-container'>
                     <TooltipButton 
                         buttonFunction={buttonFunction} 
-                        classList={'primary-btn'} 
-                        disabled={!isLast} 
+                        buttonClassList={'primary-btn'} 
+                        buttonDisabled={!isLast} 
                         buttonContent={buttonText} 
                         tooltipDirection={0} 
                         tooltipContent={tooltipContent}

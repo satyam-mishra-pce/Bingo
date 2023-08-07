@@ -17,12 +17,8 @@ const HeaderStrip = (
           <img src={LogoText} />
         </a>
         
-        <div className='exit-wrapper'>
-            <button id='exit-game-btn' onClick={() => {
-              if (visible) {
-                leaveRoom();
-              }  
-            }}>Exit</button>
+        <div className='utils-wrapper'>
+            <button id='exit-game-btn' onClick={leaveRoom} disabled={!visible}>Exit</button>
         </div>
 
     </div>

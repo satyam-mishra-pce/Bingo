@@ -3,8 +3,9 @@
 #headerstrip {
     height: 60px;
     margin-top: -62px;
-    display: grid;
-    grid-template-columns: auto 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background: rgb(var(--bg-90));
     backdrop-filter: blur(40px);
     transition: margin-top 300ms ease-out;
@@ -28,16 +29,17 @@
 }
 
 
-#headerstrip div.exit-wrapper {
+#headerstrip div.utils-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
 }
 
 #exit-game-btn {
     border: none;
     font-size: 20px;
-    color: red;
+    color: rgb(var(--red));
     background: transparent;
     cursor: pointer;
     padding: 5px 10px;

@@ -5,6 +5,11 @@
     padding: 14px;
     position: absolute;
     top: 0;
+    opacity: 0;
+  }
+
+  #lobby.active {
+    opacity: 1;
   }
   
   #lobby.transitioning {

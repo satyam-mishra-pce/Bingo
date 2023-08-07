@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import './css/game.css';
 
@@ -10,12 +10,14 @@ import ParticipantsView from './Components/ParticipantsView';
 import WinPopup from './Components/WinPopup';
 
 import { getRandomNumbers } from './functions';
+import DisabledContext from './Contexts/DisabledContext';
 
 
 const Game = ({
   socket,
   leaveRoom,
-  addToast
+  addToast,
+  isActive
 }) => {
 
   const [roomID, setRoomID] = useState("00ROOM");
@@ -29,6 +31,22 @@ const Game = ({
   const [isMyTurn, setMyTurn] = useState(turn === socket.id);
   const [haltMode, setHaltMode] = useState(false);
   const [resetRequired, setResetRequired] = useState(false);
+
+  const [isGameActive, setGameActive] = useState(isActive);
+  const gameRef = useRef(undefined);
+
+  useEffect(() => {
+      setGameActive(isActive);
+      setTimeout(() => {
+          autoFocus();
+      });
+  }, [isActive]);
+
+  const autoFocus = () => {
+    if (gameRef.current != undefined) {
+      document.querySelector("button.copy-btn").focus();
+    }
+  }
 
 
   // Handle checking for your turn
@@ -80,7 +98,6 @@ const Game = ({
         addToast(id, data.fromName + " disconnected.");
       }
 
-      console.log("Participants changed:");
       setParticipants(data.response.participants);
       setTurn(data.response.turn);
       setRoomID(data.response.roomID);
@@ -119,7 +136,7 @@ const Game = ({
       if (data.success) {
 
         const id = Date.now() + Math.floor(Math.random() * 10000);
-        addToast(id, "Game had been reset.")
+        addToast(id, "Game has been reset.")
 
         setGridNumbers(getRandomNumbers(25));
         setMarkingHistory({});
@@ -196,19 +213,19 @@ const Game = ({
     // 3. Disable the other buttons meanwhile
     // 4. Mark the number in database
 
-    console.log("Marking event fired for", number);
+    // console.log("Marking event fired for", number);
     if (!isMyTurn) {
-      console.log("Turn is not yours!");
+      // console.log("Turn is not yours!");
       return;
     }
 
     if (haltMode) {
-      console.log("Please wait...");
+      // console.log("Please wait...");
       return;
     }
 
     if (markedNumbers.includes(number.toString())) {
-      console.log(`${number} is already marked.`);
+      // console.log(`${number} is already marked.`);
       return;
     }
 
@@ -251,63 +268,66 @@ const Game = ({
   }
 
   return (
-    <div className='game-frame'>
+    <DisabledContext.Provider value={!isGameActive}>
+      <div className={`game-frame ${isGameActive ? "active" : ""}`} ref = {gameRef}>
 
-      < RoomOptions roomID={roomID} participants={participants} setParticipantsViewVisibility={setParticipantsViewVisibility} />
+        <RoomOptions roomID={roomID} participants={participants} setParticipantsViewVisibility={setParticipantsViewVisibility}/>
 
-      <div className='splitter'>
+        <div className='splitter'>
 
-        <div className={'game-board-wrapper' + (isMyTurn ? " my-turn " : "")}>
-          <div className='game-board'>
+          <div className={'game-board-wrapper' + (isMyTurn ? " my-turn " : "")}>
+            <div className='game-board'>
 
-            <div className='bingo-marker default-cursor'>
-              <div className='bingo-letter b' onClick={() => {socket.emit("win")}}>B</div>
-              <div className='bingo-letter i'>I</div>
-              <div className='bingo-letter n'>N</div>
-              <div className='bingo-letter g'>G</div>
-              <div className='bingo-letter o'>O</div>
+              <div className='bingo-marker default-cursor'>
+                <div className='bingo-letter b' disabled = {!isGameActive}>B</div>
+                <div className='bingo-letter i' disabled = {!isGameActive}>I</div>
+                <div className='bingo-letter n' disabled = {!isGameActive}>N</div>
+                <div className='bingo-letter g' disabled = {!isGameActive}>G</div>
+                <div className='bingo-letter o' disabled = {!isGameActive}>O</div>
+              </div>
+
+              <div id='bingo-grid'>
+                {
+                  gridNumbers.map((number) => {
+                    return <button
+                      disabled = {!isGameActive}
+                      className={`grid-btn num-${number} ${(number in markingHistory) ? "marked" : ""}`}
+                      key={`num-${number}`}
+                      onClick={
+                        () => {
+                          markNumber(number);
+                        }
+                      }>{number}</button>
+                  })
+                }
+              </div>
             </div>
 
-            <div id='bingo-grid'>
-              {
-                gridNumbers.map((number) => {
-                  return <button
-                    className={`grid-btn num-${number} ${(number in markingHistory) ? "marked" : ""}`}
-                    key={`num-${number}`}
-                    onClick={
-                      () => {
-                        markNumber(number);
-                      }
-                    }>{number}</button>
-                })
-              }
-            </div>
+            < TurnIndicator
+              isMyTurn={isMyTurn}
+              participants={participants}
+              turn={turn}
+              started={markedNumbers.length !== 0}
+              resetRequired={resetRequired}
+              reset={reset}
+            />
           </div>
 
-          < TurnIndicator
-            isMyTurn={isMyTurn}
-            participants={participants}
-            turn={turn}
-            started={markedNumbers.length !== 0}
-            resetRequired={resetRequired}
-            reset={reset}
-          />
+
+          < MarkingHistory markedNumbers={markedNumbers} markMap={markingHistory} />
+
         </div>
 
-
-        < MarkingHistory markedNumbers={markedNumbers} markMap={markingHistory} />
-
+        <ParticipantsView 
+          userID = {socket.id} 
+          participants = {participants} 
+          participantsViewVisibility={participantsViewVisibility} 
+          setParticipantsViewVisibility={setParticipantsViewVisibility}
+          leaveRoom = {leaveRoom}
+        />
+        <WinPopup socket={socket} setHaltMode={setHaltMode} setResetRequired={setResetRequired}/>
       </div>
-
-      <ParticipantsView 
-        userID = {socket.id} 
-        participants = {participants} 
-        participantsViewVisibility={participantsViewVisibility} 
-        setParticipantsViewVisibility={setParticipantsViewVisibility}
-        leaveRoom = {leaveRoom}
-      />
-      <WinPopup socket={socket} setHaltMode={setHaltMode} setResetRequired={setResetRequired} />
-    </div>
+    </DisabledContext.Provider>
   )
 }
 
