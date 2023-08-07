@@ -105,6 +105,7 @@ const App = () => {
     for (let i = 0; i < interactionPanel.children.length; i++) {
       if (i === newView) {
         resizeObs.observe(interactionPanel.children[i]);
+        console.log("NOW Observing for", interactionPanel.children[i]);
       } else {
         resizeObs.unobserve(interactionPanel.children[i]);
       }
@@ -118,15 +119,17 @@ const App = () => {
     const interactionPanel = interactionPanelRef.current;
 
     const obs = new ResizeObserver(entries => {
+      console.log("Change detected");
       interactionPanel.style.height = entries[0].borderBoxSize[0].blockSize + "px";
       interactionPanel.style.width = entries[0].borderBoxSize[0].inlineSize + 2 + "px";
     });
     setResizeObs(obs);
-
+    
     setTimeout(() => {
       setSplashAnimating(false);
     }, 3100);
   }, []);
+
 
   // Socket Connectivity
   useEffect(() => {
@@ -165,6 +168,8 @@ const App = () => {
           interactionPanel.classList.add("bounce-in");
           setTimeout(() => {
             interactionPanel.classList.remove("bounce-in");
+            //Attach Adjustment Hook / Listener
+            adjustInteractionPanel(0);
             //Auto Focus for the first time:
             //⚠️⚠️⚠️ Remember to update the element here, if you change autofocus config on the lobby page ⚠️⚠️⚠️
             interactionPanel.children[0].querySelector("#name-input").focus();
@@ -177,7 +182,7 @@ const App = () => {
 
   // Create and Join Room:
   const createAndJoinRoom = (username, limit) => {
-    
+
     socket.emit("create-and-join-room", {
       'displayName': username,
       'limit': limit
