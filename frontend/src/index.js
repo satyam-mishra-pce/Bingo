@@ -105,7 +105,6 @@ const App = () => {
     for (let i = 0; i < interactionPanel.children.length; i++) {
       if (i === newView) {
         resizeObs.observe(interactionPanel.children[i]);
-        console.log("NOW Observing for", interactionPanel.children[i]);
       } else {
         resizeObs.unobserve(interactionPanel.children[i]);
       }
@@ -119,7 +118,6 @@ const App = () => {
     const interactionPanel = interactionPanelRef.current;
 
     const obs = new ResizeObserver(entries => {
-      console.log("Change detected");
       interactionPanel.style.height = entries[0].borderBoxSize[0].blockSize + "px";
       interactionPanel.style.width = entries[0].borderBoxSize[0].inlineSize + 2 + "px";
     });
@@ -312,7 +310,7 @@ const App = () => {
 
   return (
     <>
-      <HeaderStrip leaveRoom={leaveRoom} visible={view === 1} />
+      <HeaderStrip visible={isSocketConnected && !isSplashAnimating} />
       <div id='backdrop'>
         <Splash fadeOut={isSocketConnected && !isSplashAnimating} />
         <div id='interaction-panel' ref={interactionPanelRef} style={{ display: "none" }}>
@@ -354,4 +352,8 @@ const App = () => {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<React.StrictMode><App /></React.StrictMode>);
+root.render(
+  // <React.StrictMode>
+    <App />
+  // </React.StrictMode>
+);

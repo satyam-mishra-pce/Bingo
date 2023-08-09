@@ -23,7 +23,7 @@ const Lobby = ({
         if (isActive) {
             setTimeout(() => {
                 autoFocus();
-            }, 50);
+            }, 100);
         }
     }, [isActive]);
 
@@ -44,7 +44,7 @@ const Lobby = ({
 
             <div id='name-section'>
                 <label htmlFor='name'>Name</label> 
-                <input ref={autoFocusRef} id='name-input' name='name' type='text' placeholder='John Doe' value={name} onInput={(evt) => setname(evt.target.value)} disabled={!isLobbyActive}/>
+                <input ref={autoFocusRef} id='name-input' name='name' type='text' placeholder='Enter your name' value={name} onInput={(evt) => setname(evt.target.value)} disabled={!isLobbyActive}/>
             </div>
 
             <div id='tab-slider-wrapper'>

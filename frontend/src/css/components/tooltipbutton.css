@@ -4,10 +4,10 @@ button.tooltip-btn {
 
 button.tooltip-btn .tooltip {
     position: absolute;
-    background: white;
+    background: rgb(var(--bg-100));
     border: 1px solid rgb(var(--fg-50), 0.3);
     border-radius: 8px;
-    box-shadow: 0 6px 10px rgb(var(--fg-100), 0.1);
+    box-shadow: 0 6px 10px rgb(0, 0, 0, 0.1);
     pointer-events: none;
     transition: transform 300ms ease-out, opacity 300ms ease-out;
 }
@@ -76,7 +76,7 @@ button.tooltip-btn .tooltip.left.invisible {
     height: 14px;
     width: 14px;
     border: 1px solid rgb(var(--fg-50), 0.3);
-    background: white;
+    background: rgb(var(--bg-100));
     border-right: none;
     border-bottom: none;
     border-radius: 6px 0 0 0;

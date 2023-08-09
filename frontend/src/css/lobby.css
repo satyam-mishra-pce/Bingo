@@ -147,7 +147,7 @@
   
   #limit-box button:disabled{
     background: rgb(var(--bg-90));
-    color: black;
+    color: rgb(var(--fg-100));
   }
   
   #limit-box div.limit {

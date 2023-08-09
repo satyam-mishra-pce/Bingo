@@ -39,7 +39,7 @@ const Game = ({
       setGameActive(isActive);
       setTimeout(() => {
           autoFocus();
-      });
+      }, 100);
   }, [isActive]);
 
   const autoFocus = () => {

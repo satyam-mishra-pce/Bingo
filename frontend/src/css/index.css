@@ -59,6 +59,7 @@ button.primary-btn:disabled, button.sec-btn:disabled {
 
 :root {
 
+  
   --accent-primary: 0, 132, 255;
   --red: 255, 59, 48;
   --yellow: 255, 204, 0;
@@ -80,23 +81,26 @@ button.primary-btn:disabled, button.sec-btn:disabled {
 
   --bg-100: 255, 255, 255;
   --bg-90: 245, 245, 245;
-  --bg-85: 240, 240, 240;
-  --bg-80: 230, 230, 230;
-  --bg-75: 220, 220, 220;
-  --bg-70: 210, 210, 210;
-  --bg-60: 200, 200, 200;
-  --bg-50: 190, 190, 190;
+  --bg-80: 235, 235, 235;
+  --bg-70: 225, 225, 225;
+  --bg-60: 215, 215, 215;
+  /* --bg-70: 210, 210, 210;
+  --bg-80: 200, 200, 200; */
+  /* --bg-50: 190, 190, 190;
   --bg-40: 180, 180, 180;
   --bg-30: 170, 170, 170;
   --bg-20: 155, 155, 155;
   --bg-10: 145, 145, 145;
-  --bg-0: 135, 135, 135;
+  --bg-0: 135, 135, 135; */
 
-
+  
   --filter-accent-blue: invert(44%) sepia(44%) saturate(7500%) hue-rotate(195deg) brightness(102%) contrast(103%);
   --filter-mid-grey: invert(56%) sepia(0%) saturate(127%) hue-rotate(179deg) brightness(102%) contrast(86%);
   --filter-light-grey: invert(84%) sepia(0%) saturate(496%) hue-rotate(154deg) brightness(82%) contrast(90%);
   --filter-white: invert(100%);
+  
+  
+  accent-color: rgb(var(--accent-primary));
 
 }
 
@@ -114,6 +118,8 @@ input[type=text] {
   font-size: 18px;
   border: 1px solid rgb(var(--fg-50), 0.3);
   border-radius: 9px;
+  background: rgb(var(--bg-100));
+  color: rgb(var(--fg-100));
 }
 
 input[type=text]:hover {
@@ -133,6 +139,8 @@ input[type=text]:focus {
 html, body {
   height: 100%;
   width: 100%;
+  color: rgb(var(--fg-100));
+  accent-color: rgb(var(--accent-primary));
 }
 
 #root {

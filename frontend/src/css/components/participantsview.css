@@ -61,14 +61,14 @@
     width: 30px;
     border: none;
     border-radius: 15px;
-    background: rgb(var(--bg-60), 0.4);
+    background: rgb(var(--bg-80), 0.4);
     transition: 150ms;
     font-size: 16px;
 }
 
 .participants-view-box .title button.close-btn:hover {
-    background: rgb(200, 0, 0, 0.4);
-    color: rgb(200, 0, 0);
+    background: rgb(var(--red), 0.4);
+    color: rgb(var(--red));
 }
 
 

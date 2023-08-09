@@ -113,11 +113,11 @@ const WinPopup = (
             <ReactCanvasConfetti 
                 style={confettiStyle}
                 fire={fire}
-                particleCount={1200}
+                particleCount={1400}
                 spread={120}
-                origin={{x: 0.5, y: 1.25}}
+                origin={{x: 0.5, y: 1.4}}
                 ticks={300}
-                startVelocity={100}
+                startVelocity={150}
                 gravity={1.6}
                 scalar={1.15}
             />

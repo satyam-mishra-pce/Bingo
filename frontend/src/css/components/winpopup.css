@@ -61,14 +61,14 @@
     width: 30px;
     border: none;
     border-radius: 15px;
-    background: rgb(var(--bg-60), 0.4);
+    background: rgb(var(--bg-80), 0.4);
     transition: 150ms;
     font-size: 16px;
 }
 
 #win-popup .title .close-popup-btn:hover {
-    background: rgb(200, 0, 0, 0.4);
-    color: rgb(200, 0, 0);
+    background: rgb(var(--red), 0.4);
+    color: rgb(var(--red));
 }
 
 div.winner-caption {
@@ -90,8 +90,8 @@ div.winner-caption {
 #winner-list li {
     display: inline-flex;
     flex-direction: column;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgb(var(--bg-100));
+    border: 1px solid rgb(var(--fg-100), 0.2);
     border-radius: 8px;
     margin: 0 5px;
 }
